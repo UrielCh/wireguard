@@ -17,3 +17,5 @@ PrivateKey = ${K}
 EOF
 
 # export LOG_LEVEL=verbose
+
+>&2 echo ./init.sh \> wg${WGID}.conf
