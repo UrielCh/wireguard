@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>local.wg-quick-0</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/wg-quick</string>
+        <string>up</string>
+        <string>wg0</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/wg0.stdout</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/wg0.stderr</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+    <key>LaunchOnlyOnce</key>        
+    <true/>
+    
+    <key>UserName</key>
+    <string>root</string>
+    <key>GroupName</key>
+    <string>wheel</string>
+    <key>InitGroups</key>
+    <true/>
+  </dict>
+</plist>
+<!-- https://www.launchd.info/ -->
+<!-- 
+sudo cp local.wg-quick-18.plist /Library/LaunchDaemons/
+sudo chown root:wheel /Library/LaunchDaemons/local.wg-quick-0.plist
+sudo launchctl load  -w /Library/LaunchDaemons/local.wg-quick-0.plist
+-->
+<!-- launchctl stop     /Library/LaunchDaemons/local.wg-quick-0.plist -->
+<!-- launchctl start -w /Library/LaunchDaemons/local.wg-quick-0.plist -->

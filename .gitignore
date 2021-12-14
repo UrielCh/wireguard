@@ -1,3 +1,5 @@
 *.conf
 .env
 allKeys.txt
+*.save
+.DS_Store
