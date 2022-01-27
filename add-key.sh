@@ -1,6 +1,4 @@
 #!/bin/bash
-# systemctl restart wg-quick@wg1.service
-# ./printKey.sh  david-phone | qrencode -t ansiutf8
 . .env
 . common.sh
 
