@@ -40,7 +40,7 @@ git clone git@github.com:UrielCh/wireguard.git .
 
 ### Init config
 
-generate a random configuration, then customise it
+Generate a random configuration environement, then customise it as you want.
 
 ```
 ./randconfig.sh > .env
@@ -50,7 +50,7 @@ nano .env
 
 ### Create a new client
 
-use ./add-key.sh
+Use ./add-key.sh
 
 ```bash
 ./add-key.sh client_id_fron_0_to_1021 client_name >> wg1.conf
@@ -87,7 +87,7 @@ to view it as a QR code
 modprobe wireguard
 echo 'module wireguard +p' > /sys/kernel/debug/dynamic_debug/control
 # tail -F /var/log/messages /var/log/kern.log
-sudo journalctl -f
+journalctl -f
 ```
 
 Diasble:
