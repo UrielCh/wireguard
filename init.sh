@@ -18,8 +18,10 @@ Address = ${SRV}/${MASK}
 ListenPort = ${PORT}
 PrivateKey = ${K}
 # PublicKey = ${P}
-# PostUp   = iptables -A FORWARD -i vmbr1 -o wg${WGID} -j ACCEPT; iptables -A FORWARD -i wg${WGID} -o vmbr1 -j ACCEPT
-# PostDown = iptables -D FORWARD -i vmbr1 -o wg${WGID} -j ACCEPT; iptables -D FORWARD -i wg${WGID} -o vmbr1 -j ACCEPT
+# PostUp   = iptables -A FORWARD -i vmbr1 -o wg${WGID} -j ACCEPT
+# PostUp   = iptables -A FORWARD -i wg${WGID} -o vmbr1 -j ACCEPT
+# PostDown = iptables -D FORWARD -i vmbr1 -o wg${WGID} -j ACCEPT
+# PostDown = iptables -D FORWARD -i wg${WGID} -o vmbr1 -j ACCEPT
 EOF
 
 # export LOG_LEVEL=verbose

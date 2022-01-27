@@ -2,6 +2,13 @@
 
 Wireguard Setup scripts writin in bash.
 
+Main lines:
+Because this script is intended to be run as root, every call will invite you to enter the correct command with a shell redirection to fill the corresponding configuration files.
+
+However, a file named allKeys.txt will be the only automatically created file; This file will contain a text database of all generated private keys. So if you create a user key twice, the key will be the same.
+allKeys.txt default permission will be 0600.
+
+
 ## Setup Wireguard
 
 ### Install wireguard
@@ -88,6 +95,8 @@ modprobe wireguard
 echo 'module wireguard +p' > /sys/kernel/debug/dynamic_debug/control
 # tail -F /var/log/messages /var/log/kern.log
 journalctl -f
+# or
+dmesg -wH
 ```
 
 Diasble:
