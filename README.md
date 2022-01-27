@@ -20,3 +20,10 @@ nano .env
 ```
 
 
+## enable debug
+
+```bash
+modprobe wireguard
+echo module wireguard +p > /sys/kernel/debug/dynamic_debug/control
+tail -F /var/log/messages /var/log/kern.log
+```

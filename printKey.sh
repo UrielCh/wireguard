@@ -54,3 +54,6 @@ rm Tmp
 >&2 echo nano /etc/wireguard/wg${WGID}.conf
 >&2 echo systemctl start wg-quick@wg${WGID}
 >&2 echo systemctl enable wg-quick@wg${WGID}
+OFFSET=$(($(maskSize ${MASK})-2))
+SRV=$(trIP $IP_FIRST $OFFSET)
+>&2 echo ping -c 3 ${SRV}

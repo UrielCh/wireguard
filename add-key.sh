@@ -65,7 +65,7 @@ cat << EOF
 # user:$2
 #PrivateKey = $K
 PublicKey = $P
-AllowedIps = ${CLIENT_IP}/${MASK}
+AllowedIps = ${CLIENT_IP}/32
 EOF
 
 if [ -t 1 ] ; then
