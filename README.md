@@ -1,12 +1,12 @@
-# wireguard
+# Wireguard
 
 Wireguard Setup scripts writin in bash.
 
 ## Setup Wireguard
 
-### install wireguard
+### Install wireguard
 
-ensure that kernel headers are installed
+Ensure that kernel headers are installed
 
 * debian 10 and older (ex: buster)
 ```
@@ -29,16 +29,16 @@ apt install -y linux-headers-$(uname -r) wireguard
 apt-get install qrencode
 ```
 
-## install the scripts
+## Install the scripts
 
-### clone this repo
+### Clone this repo
 
 ```
 cd  /etc/wireguard/
 git clone git@github.com:UrielCh/wireguard.git .
 ```
 
-### init config
+### Init config
 
 generate a random configuration, then customise it
 
@@ -48,7 +48,7 @@ nano .env
 ./init.sh
 ```
 
-### create a new client
+### Create a new client
 
 use ./add-key.sh
 
@@ -62,7 +62,7 @@ example:
 Read output for guide
 
 
-### display a key
+### Display a key
 
 ```bash
 ./printKey.sh user-1
@@ -75,13 +75,13 @@ or
 ```
 to view it as a QR code
 
-### list keys:
+### List keys:
 
 ```bash
 ./list.sh 
 ```
 
-## enable / disable debug
+## Enable / Disable debug
 
 ```bash
 modprobe wireguard
@@ -96,7 +96,7 @@ Diasble:
 echo 'module wireguard -p' > /sys/kernel/debug/dynamic_debug/control
 ```
 
-## sample
+## Sample
 
 Create a serie of access key:
 
@@ -108,7 +108,7 @@ for X in {001..010}; do ID=$(echo $X|sed -E s/^0+//); ./add-key.sh $((ID+256)) c
 
 if your first IP os 10.0.0.0, this script will generate Acces with IPs 10.0.1.1, 10.0.1.2, 10.0.1.3 ...
 
-## references
+## References
 
 - [wireguard guide](https://github.com/pirate/wireguard-docs)
 - [conf sample + ipV6](https://try.popho.be/wg.html)
