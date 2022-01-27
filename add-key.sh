@@ -4,10 +4,9 @@
 . .env
 . utils.sh
 
-MAX_OFFSET=$(($(maskSize ${MASK})-3))
+umask 077
 
-# Sample generat bunk of keys + offset IP by 256
-# for X in {003..006}; do ID=$(echo $X|sed -E s/^0+//); ./add-key.sh $((ID+256)) client-$X >> wg1.conf; done
+MAX_OFFSET=$(($(maskSize ${MASK})-3))
 
 if [ "$#" -ne 2 ]
 then

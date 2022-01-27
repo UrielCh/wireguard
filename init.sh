@@ -2,6 +2,7 @@
 . .env
 . utils.sh
 
+umask 077
 # enable debug with:
 # echo module wireguard +p > /sys/kernel/debug/dynamic_debug/control
 K=$(wg genkey);
