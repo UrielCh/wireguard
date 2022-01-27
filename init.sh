@@ -1,14 +1,19 @@
 #!/bin/bash
 . .env
+. utils.sh
 
 # enable debug with:
 # echo module wireguard +p > /sys/kernel/debug/dynamic_debug/control
 K=$(wg genkey);
 P=$(echo $K | wg pubkey)
 
+
+OFFSET=$(($(maskSize ${MASK})-2))
+SRV=$(trIP $IP_FIRST $OFFSET)
+
 cat << EOF
 [Interface]
-Address = ${IP1}.${IP2}.${IP3}.254/24
+Address = ${SRV}/${MASK}
 ListenPort = ${PORT}
 PrivateKey = ${K}
 # PublicKey = ${P}
@@ -18,4 +23,11 @@ EOF
 
 # export LOG_LEVEL=verbose
 
+if [ -t 1 ] ; then
+>&2 echo
 >&2 echo ./init.sh \> wg${WGID}.conf
+>&2 echo
+>&2 echo Copy and paste the single line above to init your environement
+else
+>&2 echo Conf generated
+fi

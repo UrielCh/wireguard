@@ -1,5 +1,6 @@
 #!/bin/bash
 . .env
+. utils.sh
 
 # systemctl restart wg-quick@wg${WGID}.service
 if [ "$#" -eq 0 ]
@@ -31,11 +32,11 @@ cat > Tmp << EOF
 [Interface]
 # user:$1
 PrivateKey = ${KEY}
-Address = ${IP}/24
+Address = ${IP}/${MASK}
 
 [Peer]
 PublicKey = ${SRVPUB}
-AllowedIPs = ${IP1}.${IP2}.${IP3}.0/24${EXTRA_ROUTE}
+AllowedIPs = ${IP_FIRST}/${MASK}${EXTRA_ROUTE}
 Endpoint = ${END_POINT}
 PersistentKeepalive = 115
 

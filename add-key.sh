@@ -2,29 +2,37 @@
 # systemctl restart wg-quick@wg1.service
 # ./printKey.sh  david-phone | qrencode -t ansiutf8
 . .env
+. utils.sh
+
+MAX_OFFSET=$(($(maskSize ${MASK})-3))
+
+# for X in {3..30}; do ./add-key.sh $X g$X >> wg17.conf; done
 
 if [ "$#" -ne 2 ]
 then
  >&2 echo usage:
- >&2 echo $0 ID[0-250] name  \>\> wg${WGID}.conf
+ >&2 echo $0 ID[0-${MAX_OFFSET}] name  \>\> wg${WGID}.conf
  >&2 echo
  >&2 echo example:
- >&2 echo $0 246 debo \>\> wg${WGID}.conf
- >&2 echo $0 243 david-phone \>\> wg${WGID}.conf
+ >&2 echo $0 1 user01 \>\> wg${WGID}.conf
+ >&2 echo $0 2 user02 \>\> wg${WGID}.conf
  exit 1
 fi
-# for X in {3..30}; do ./add-key.sh $X g$X >> wg17.conf; done
-#
-# if [[ ! $1 =~ '[12]?[0-9]{1,2}' ]]; then first param must be a number
 
-if [[ ! $1 -gt 0 ]]; then echo first param must must be a number 1-253; exit; fi
-if [[ ! $1 -lt 254 ]]; then echo first param must must be a number 1-253; exit; fi
+if ! [[ $1 =~ ^[0-9]+$ ]] ; then echo "error: first argument \"$1\" id must be a number between 1 and ${MAX_OFFSET} " >&2; exit 1; fi;
+if   [[ $2 =~ ^[0-9]+$ ]] ; then echo "error: second argument \"$2\" username can not be a number" >&2; exit 1; fi;
 
-C1=$(grep -c 10\\.${IP2}\\.0\\.$1/ wg${WGID}.conf)
+if [[ ! $1 -gt 0 ]]; then echo first param must must be a number 1-${MAX_OFFSET}; exit; fi
+if [[ ! $1 -le $MAX_OFFSET ]]; then echo first param must must be a number 1-${MAX_OFFSET}; exit; fi
+
+CLIENT_IP=$(trIP $IP_FIRST $1)
+REGEXP=$(echo ${CLIENT_IP}/${MASK} | sed s/\\./\\\\\./g)
+C1=$(grep -c ${REGEXP} wg${WGID}.conf)
 
 if [ $C1 -ne 0 ]
 then
-  >&2 echo IP $1 already taken
+  USERNAME=$(grep -B4 ${REGEXP} wg${WGID}.conf  | grep ' user:' | cut -d: -f2)
+  >&2 echo IP ${CLIENT_IP} already taken by user ${USERNAME}
   exit 1
 fi
 
@@ -32,11 +40,16 @@ C2="$(grep -c user:$2$ wg${WGID}.conf)"
 
 if [ $C2 -ne 0 ]
 then
-  >&2 echo user $2 already exists
+  IP="$(grep -A4 user:$2$ wg${WGID}.conf  | grep 'AllowedIps ' | cut -d= -f2)"
+  >&2 echo user $2 already exists using ${IP}
   exit 1
 fi
 
+k=
+if [ -f allKeys.txt ]
+then
 K=$(grep ^${2}: allKeys.txt | cut -d: -f2)
+fi
 
 if [ -z "$K" ]
 then
@@ -51,11 +64,18 @@ cat << EOF
 # user:$2
 #PrivateKey = $K
 PublicKey = $P
-AllowedIps = ${IP1}.${IP2}.${IP3}.$1/32
+AllowedIps = ${CLIENT_IP}/${MASK}
 
 EOF
 
+if [ -t 1 ] ; then
+>&2 echo add this key in wg${WGID}.conf by hand or with:
+>&2 echo "$0" "$@" \>\> wg${WGID}.conf
+else
+>&2 echo "Key generated"
+fi
+
 >&2 echo
->&2 echo now restart wireguard service to take effect
+>&2 echo Now restart wireguard service to take effect
 # >&2 echo "add this key in wg${WGID}.conf then"
 >&2 echo systemctl restart wg-quick@wg${WGID}.service
