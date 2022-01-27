@@ -2,7 +2,7 @@
 # systemctl restart wg-quick@wg1.service
 # ./printKey.sh  david-phone | qrencode -t ansiutf8
 . .env
-. utils.sh
+. common.sh
 
 umask 077
 
@@ -11,7 +11,7 @@ MAX_OFFSET=$(($(maskSize ${MASK})-3))
 if [ "$#" -ne 2 ]
 then
  >&2 echo usage:
- >&2 echo $0 ID[0-${MAX_OFFSET}] name  \>\> wg${WGID}.conf
+ >&2 echo $0 client_id_fron_0_to_${MAX_OFFSET} client_name  \>\> wg${WGID}.conf
  >&2 echo
  >&2 echo example:
  >&2 echo $0 1 user01 \>\> wg${WGID}.conf

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+>&2 echo -e "- using \e[31mwg${WGID}\e[0m on network \e[32m${IP_FIRST}/${MASK}\e[0m -"
+>&2 echo 
+
 ## https://gist.github.com/jjarmoc/1299906
 dec2ip() {
   # itoa

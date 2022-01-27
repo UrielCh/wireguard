@@ -1,24 +1,85 @@
 # wireguard
 
-## install wireguard
+Wireguard Setup scripts writin in bash.
+
+## Setup Wireguard
+
+### install wireguard
+
+ensure that kernel headers are installed
+
+* debian 10 and older (ex: buster)
+```
+echo 'deb http://deb.debian.org/debian buster-backports main contrib non-free' > /etc/apt/sources.list.d/buster-backports.list"
+```
+
+* for proxmox:
 ```
 apt install pve-headers-$(uname -r) wireguard
 ```
-## clone this repo
+
+* for debian:
+```
+apt install -y linux-headers-$(uname -r) wireguard
+```
+
+### Install extra dependences
+
+```bash
+apt-get install qrencode
+```
+
+## install the scripts
+
+### clone this repo
 
 ```
 cd  /etc/wireguard/
 git clone git@github.com:UrielCh/wireguard.git .
 ```
 
-## init config
+### init config
+
+generate a random configuration, then customise it
 
 ```
-cp .env.sample .env
+./randconfig.sh > .env
 nano .env
 ./init.sh
 ```
 
+### create a new client
+
+use ./add-key.sh
+
+```bash
+./add-key.sh client_id_fron_0_to_1021 client_name >> wg1.conf
+
+example:
+./add-key.sh 1 user01 >> wg22.conf
+./add-key.sh 2 user02 >> wg22.conf
+```
+Read output for guide
+
+
+### display a key
+
+```bash
+./printKey.sh user-1
+```
+
+or 
+
+```bash
+./printKey.sh user-1 QR
+```
+to view it as a QR code
+
+### list keys:
+
+```bash
+./list.sh 
+```
 
 ## enable / disable debug
 
@@ -34,7 +95,6 @@ Diasble:
 ```bash
 echo 'module wireguard -p' > /sys/kernel/debug/dynamic_debug/control
 ```
-
 
 ## sample
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 . .env
-. utils.sh
+. common.sh
 
 # systemctl restart wg-quick@wg${WGID}.service
 if [ "$#" -eq 0 ]
@@ -8,14 +8,11 @@ then
  echo usage:
  echo $0 username
  echo example:
- echo $0 uriel
- echo $0 uriel QR
+ echo $0 user-1
+ echo $0 user-1 QR
  # \| qrencode -t ansiutf8
  exit 1
 fi
-# mkdir client
-# for X in {1..30}; do ./printKey.sh  g$X > client/g$X.conf; done
-#
 
 DATA=$(grep -A3 \ user:${1}$ wg${WGID}.conf)
 
@@ -33,12 +30,13 @@ cat > Tmp << EOF
 # user:$1
 PrivateKey = ${KEY}
 Address = ${IP}/${MASK}
+DNS = ${CLIENT_DNS}
 
 [Peer]
 PublicKey = ${SRVPUB}
 AllowedIPs = ${IP_FIRST}/${MASK}${EXTRA_ROUTE}
 Endpoint = ${END_POINT}
-PersistentKeepalive = 115
+PersistentKeepalive = ${PersistentKeepalive}
 
 EOF
 if [ "$#" -eq 1 ]

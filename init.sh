@@ -1,6 +1,6 @@
 #!/bin/bash
 . .env
-. utils.sh
+. common.sh
 
 umask 077
 # enable debug with:
