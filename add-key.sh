@@ -6,7 +6,8 @@
 
 MAX_OFFSET=$(($(maskSize ${MASK})-3))
 
-# for X in {3..30}; do ./add-key.sh $X g$X >> wg17.conf; done
+# Sample generat bunk of keys + offset IP by 256
+# for X in {003..006}; do ID=$(echo $X|sed -E s/^0+//); ./add-key.sh $((ID+256)) client-$X >> wg1.conf; done
 
 if [ "$#" -ne 2 ]
 then
@@ -65,14 +66,13 @@ cat << EOF
 #PrivateKey = $K
 PublicKey = $P
 AllowedIps = ${CLIENT_IP}/${MASK}
-
 EOF
 
 if [ -t 1 ] ; then
 >&2 echo add this key in wg${WGID}.conf by hand or with:
 >&2 echo "$0" "$@" \>\> wg${WGID}.conf
 else
->&2 echo "Key generated"
+>&2 echo -e "\e[31m$2\e[0m Key generated With IP: \e[32m${CLIENT_IP}\e[0m"
 fi
 
 >&2 echo
