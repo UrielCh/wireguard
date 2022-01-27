@@ -56,8 +56,8 @@ use ./add-key.sh
 ./add-key.sh client_id_fron_0_to_1021 client_name >> wg1.conf
 
 example:
-./add-key.sh 1 user01 >> wg22.conf
-./add-key.sh 2 user02 >> wg22.conf
+./add-key.sh 1 user01 >> wg1.conf
+./add-key.sh 2 user02 >> wg1.conf
 ```
 Read output for guide
 
