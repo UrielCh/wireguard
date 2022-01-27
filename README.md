@@ -103,7 +103,10 @@ Create a serie of access key:
 Sample generate bulk of keys in wg1.conf with IPs offset by 256 (only valid if with a MASK of 23 or more)
 
 ```bash
-for X in {001..010}; do ID=$(echo $X|sed -E s/^0+//); ./add-key.sh $((ID+256)) client-$X >> wg1.conf; done
+for X in {001..010};
+  do ID=$(echo $X|sed -E s/^0+//);
+  ./add-key.sh $((ID+256)) client-$X >> wg1.conf;
+done
 ```
 
 if your first IP os 10.0.0.0, this script will generate Acces with IPs 10.0.1.1, 10.0.1.2, 10.0.1.3 ...
