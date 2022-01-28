@@ -9,7 +9,7 @@ However, a file named allKeys.txt will be the only automatically created file; T
 allKeys.txt default permission will be 0600.
 
 
-## usage:
+## Usage
 
 * Init your environement VPN with `./randconfig.sh > .env`
 * customize it
