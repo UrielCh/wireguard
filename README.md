@@ -13,13 +13,13 @@ allKeys.txt default permission will be 0600.
 
 * Init your environement VPN with `./randconfig.sh > .env`
 * customize it
-* `./init.sh > wg1.conf`
-* `./add-key.sh 1 user01 >> wg1.conf`
-* `./add-key.sh 2 user02 >> wg1.conf`
-* `systemctl restart wg-quick@wg1.service`
+* `source .env`
+* `./init.sh > wg${WGID}.conf`
+* `./add-key.sh 1 user01 >> wg${WGID}.conf`
+* `./add-key.sh 2 user02 >> wg${WGID}.conf`
+* `systemctl restart wg-quick@wg${WGID}.service`
 
 You only choose an IP offset; the script will compute a valid IP address within your range.
-
 
 ## Setup Wireguard
 
