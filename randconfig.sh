@@ -19,8 +19,9 @@ echo '# Choose a first IP, this IP must be the start of your IP Range matching y
 echo IP_FIRST=${IP_FIRST}
 echo 
 echo '# Choose a mask, default is 22, allowing 1022 usable VPN IP'
+echo '# Ex: 16 will allows 65534 usable VPN IP'
+echo '# Ex: 22 will allows 1022 usable VPN IP'
 echo '# Ex: 24 will allows 254 usable VPN IP'
-echo '# Ex: 26 will allows 65534 usable VPN IP'
 echo MASK=22
 echo 
 echo '# Choose a random port number'
