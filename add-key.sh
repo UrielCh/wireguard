@@ -75,4 +75,4 @@ fi
 >&2 echo
 >&2 echo Now restart wireguard service to take effect
 # >&2 echo "add this key in wg${WGID}.conf then"
->&2 echo systemctl restart wg-quick@wg${WGID}.service
+>&2 echo systemctl reload wg-quick@wg${WGID}.service
