@@ -33,7 +33,6 @@ fi
 
 
 cat > Tmp << EOF
-cat > /etc/wireguard/wg${WGID}.conf << EOK
 [Interface]
 # user:$1
 PrivateKey = ${KEY}
@@ -45,11 +44,12 @@ PublicKey = ${SRVPUB}
 AllowedIPs = ${IP_FIRST}/${MASK}${EXTRA_ROUTE}
 Endpoint = ${END_POINT}
 PersistentKeepalive = ${PersistentKeepalive}
-EOK
 EOF
 if [ "$#" -eq 1 ]
 then
+  echo "cat > /etc/wireguard/wg${WGID}.conf << EOK"
   cat Tmp
+  echo "EOK"
 else
   cat Tmp | qrencode -t ansiutf8
 fi
