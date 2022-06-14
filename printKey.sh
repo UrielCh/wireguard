@@ -25,19 +25,27 @@ IP=$(echo "$DATA" | grep -E -o 'AllowedIps\ =\ [0-9.]+' | cut -d\  -f3)
 KEY=$(echo "$DATA" | grep -E -o 'PrivateKey\ =\ [A-Z/a-z0-9=+-]+' | cut -d\  -f3)
 SRVPUB=$(cat wg${WGID}.conf | grep ^PrivateKey |  cut -d\  -f3 | wg pubkey)
 
+DNS=
+if [ ! -z "${CLIENT_DNS}" ]
+then
+DNS="DNS = ${CLIENT_DNS}"
+fi
+
+
 cat > Tmp << EOF
+cat > /etc/wireguard/wg${WGID}.conf << EOK
 [Interface]
 # user:$1
 PrivateKey = ${KEY}
 Address = ${IP}/${MASK}
-DNS = ${CLIENT_DNS}
+$DNS
 
 [Peer]
 PublicKey = ${SRVPUB}
 AllowedIPs = ${IP_FIRST}/${MASK}${EXTRA_ROUTE}
 Endpoint = ${END_POINT}
 PersistentKeepalive = ${PersistentKeepalive}
-
+EOK
 EOF
 if [ "$#" -eq 1 ]
 then
@@ -49,7 +57,7 @@ rm Tmp
 
 
 >&2 echo
->&2 echo nano /etc/wireguard/wg${WGID}.conf\;
+# >&2 echo nano /etc/wireguard/wg${WGID}.conf\;
 >&2 echo systemctl start wg-quick@wg${WGID}\;
 >&2 echo systemctl enable wg-quick@wg${WGID}\;
 OFFSET=$(($(maskSize ${MASK})-2))
