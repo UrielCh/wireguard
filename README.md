@@ -8,6 +8,15 @@ Because this script is intended to be run as root, every call will invite you to
 However, a file named allKeys.txt will be the only automatically created file; This file will contain a text database of all generated private keys. So if you create a user key twice, the key will be the same.
 allKeys.txt default permission will be 0600.
 
+## checkout the script in an existing /etc/wireguard:
+
+```bash
+cd /etc/wireguard
+git init
+git remote add origin https://github.com/UrielCh/wireguard.git
+git fetch
+git checkout main
+```
 
 ## Usage
 
