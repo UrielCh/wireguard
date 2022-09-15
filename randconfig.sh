@@ -7,6 +7,12 @@ MASK=22
 PORT=$(shuf -i 1025-65000 -n 1)
 # Get external IP address in a shell using openDns:
 END_POINT=$(dig +short myip.opendns.com @resolver1.opendns.com):${PORT}
+END_POINT=$(dig +short txt ch whoami.cloudflare @1.0.0.1):${PORT}
+if [ "$END_POINT" = ":${PORT}" ]
+then
+ echo "failed to detect your public IP" >2
+ echo "please complete END_POINT" >2
+fi
 # Get external IP address in a shell using Google:
 #END_POINT=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com):${PORT}
 # Get external IP address in a shell using Cloudflare:
@@ -30,6 +36,8 @@ echo
 echo '# Provide the endpoint used by client to connect'
 echo END_POINT=${END_POINT}
 echo 
+echo '# PersistentKeepalive'
+echo PersistentKeepalive=125
 echo '# you can add extra route here like:'
 echo '# EXTRA_ROUTE=", 192.168.10/24"'
 echo 'EXTRA_ROUTE='
