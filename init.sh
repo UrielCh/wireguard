@@ -8,7 +8,6 @@ umask 077
 K=$(wg genkey);
 P=$(echo $K | wg pubkey)
 
-
 OFFSET=$(($(maskSize ${MASK})-2))
 SRV=$(trIP $IP_FIRST $OFFSET)
 

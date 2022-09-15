@@ -32,9 +32,11 @@ DNS="DNS = ${CLIENT_DNS}"
 fi
 
 
+IP_ID=$(getIPOffset ${IP_FIRST} ${IP})
+
 cat > Tmp << EOF
 [Interface]
-# user:$1
+# user:$1 IP_number:${IP_ID}
 PrivateKey = ${KEY}
 Address = ${IP}/${MASK}
 $DNS

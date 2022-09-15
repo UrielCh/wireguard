@@ -27,10 +27,20 @@ ip2dec() {
 maskSize() { echo $((2 ** (32 - $1) )); }
 
 # translatre IP
-# $1 ip source
-# $2 offset
+# $1 IP base but use global $IP_FIRST
+# $2 offsettrIP
 trIP() {
   DEC=$(ip2dec $IP_FIRST)
   DEC=$(($DEC+$2))
   echo $(dec2ip $DEC)
+}
+
+# translatre IP
+# $1 IP base but use global $IP_FIRST
+# $2 selected IP
+getIPOffset() {
+  FROM=$(ip2dec $IP_FIRST)
+  TO=$(ip2dec $2)
+  DIFF=$(($TO-$FROM))
+  echo $DIFF
 }
