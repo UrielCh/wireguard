@@ -37,7 +37,7 @@ echo '# Provide the endpoint used by client to connect'
 echo END_POINT=${END_POINT}
 echo 
 echo '# PersistentKeepalive'
-echo PersistentKeepalive=125
+echo PersistentKeepalive=25
 echo '# you can add extra route here like:'
 echo '# EXTRA_ROUTE=", 192.168.10/24"'
 echo 'EXTRA_ROUTE='
