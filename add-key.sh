@@ -66,13 +66,12 @@ AllowedIps = ${CLIENT_IP}/32
 EOF
 
 if [ -t 1 ] ; then
->&2 echo add this key in wg${WGID}.conf by hand or with:
+>&2 printf '\n\e[1;31m%-6s\e[m\n' "Add this key in wg${WGID}.conf by hand or with:"
 >&2 echo "$0" "$@" \>\> wg${WGID}.conf
 else
 >&2 echo -e "\e[31m$2\e[0m Key generated With IP: \e[32m${CLIENT_IP}\e[0m"
 fi
 
->&2 echo
->&2 echo Now restart wireguard service to take effect
+>&2 printf '\n\e[1;31m%-6s\e[m\n' "Now restart wireguard service to take effect"
 # >&2 echo "add this key in wg${WGID}.conf then"
 >&2 echo systemctl reload wg-quick@wg${WGID}.service
