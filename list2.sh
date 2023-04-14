@@ -20,7 +20,7 @@ ACCOUNTS=()
 for USR in $(echo "$CONF" | grep user: | cut -d: -f2)
 do
  # echo test $USR
- IP=$(echo "$CONF" | grep -A4  \ user:${USR} | grep AllowedIps | grep -E -o '[0-9]+\.[0-9.]+')
+ IP=$(echo "$CONF" | grep -A4  \ user:${USR}$ | grep AllowedIps | grep -E -o '[0-9]+\.[0-9.]+')
  IP_ID=$(getIPOffset ${IP_FIRST} ${IP})
  # echo -ne "${USR}(\e[32m${IP_ID}\e[0m), "
  # echo -e "\e[32m${IP_ID}\e[0m ${USR}"
@@ -29,11 +29,14 @@ do
 done
 
 IFS=$'\n' sorted=($(sort -n <<<"${ACCOUNTS[*]}"))
+# IFS=$'\n' sorted=${ACCOUNTS[*]}
 unset IFS
 
 for LINE in ${sorted[@]}
 do
   IFS=',' read -r id name ip <<< "$LINE"
+  unset IFS
+  # echo $LINE
   printf  "${FORMAT}" $id  $name  $ip
 done
 
