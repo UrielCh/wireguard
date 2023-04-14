@@ -5,16 +5,17 @@
 
 CONF="$(cat  wg${WGID}.conf)"
 
-FORMAT="\e[32m%3d\e[0m %s\n"
+FORMAT="\e[32m%3d\e[0m %-14s  (\e[35m%s\e[0m)\n"
 if [ $MASK -lt 23 ]
 then
- FORMAT="\e[32m%4d\e[0m %s\n"
+ FORMAT="\e[32m%4d\e[0m %-14s  (\e[35m%s\e[0m)\n"
 fi
 
 if [ $MASK -lt 20 ]
 then
- FORMAT="\e[32m%5d\e[0m %s\n"
+ FORMAT="\e[32m%5d\e[0m %-14s  (\e[35m%s\e[0m)\n"
 fi
+
 ACCOUNTS=()
 for USR in $(echo "$CONF" | grep user: | cut -d: -f2)
 do
@@ -24,7 +25,7 @@ do
  # echo -ne "${USR}(\e[32m${IP_ID}\e[0m), "
  # echo -e "\e[32m${IP_ID}\e[0m ${USR}"
  # printf "${FORMAT}" $IP_ID $USR
- ACCOUNTS+=( "${IP_ID},${USR}" )
+ ACCOUNTS+=( "${IP_ID},${USR},${IP}" )
 done
 
 IFS=$'\n' sorted=($(sort -n <<<"${ACCOUNTS[*]}"))
@@ -32,7 +33,8 @@ unset IFS
 
 for LINE in ${sorted[@]}
 do
-printf  "${FORMAT}" ${LINE%,*} ${LINE#*,}
+  IFS=',' read -r id name ip <<< "$LINE"
+  printf  "${FORMAT}" $id  $name  $ip
 done
 
 echo
